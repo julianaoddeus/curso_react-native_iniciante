@@ -13,6 +13,7 @@ import { colors } from "@/app/styles/theme";
 import { Categories } from "../components/categories";
 import { Link } from "../components/links";
 import { Option } from "../components/option";
+import { router } from "expo-router";
 
 export default function Index() {
   return (
@@ -20,7 +21,7 @@ export default function Index() {
       <View style={s.header}>
         <Image source={require("@/assets/logo.png")} style={s.logo} />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/add")}>
           <MaterialIcons name="add" size={28} color={colors.green[300]} />
         </TouchableOpacity>
       </View>
@@ -42,7 +43,7 @@ export default function Index() {
         showsVerticalScrollIndicator={false}
       />
 
-      <Modal transparent visible>
+      <Modal transparent visible={false}>
         <View style={s.modal}>
           <View style={s.modalContent}>
             <View style={s.modalHeader}>
