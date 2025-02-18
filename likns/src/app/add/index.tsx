@@ -1,11 +1,13 @@
+import { useState } from "react";
 import {
   View,
   Text,
   Pressable,
   PressableProps,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { s } from "./style";
@@ -16,7 +18,18 @@ import { Input } from "@/app/components/input";
 import { Button } from "@/app/components/button";
 
 export default function Add() {
-  const router = useRouter();
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [url, setURL] = useState("");
+
+  function handleAdd() {
+    if (!category) return Alert.alert("Categoria", "Selecione a categoria.");
+
+    if (!name.trim()) return Alert.alert("Nome", "Informe o nome.");
+
+    if (!url.trim()) return Alert.alert("URL", "Informe a url.");
+  }
+
   return (
     <View style={s.container}>
       <View style={s.header}>
@@ -27,15 +40,12 @@ export default function Add() {
       </View>
 
       <Text style={s.lable}>Selecione uma categoria</Text>
-      <Categories />
+      <Categories onChange={setCategory} selected={category} />
 
       <View style={s.form}>
-        <Input
-          placeholder="Nome"
-          onChangeText={(value) => console.log(value)}
-        />
-        <Input placeholder="Url" onChangeText={(value) => console.log(value)} />
-        <Button title="Adicionar" />
+        <Input placeholder="Nome" onChangeText={setName} autoCorrect={false} />
+        <Input placeholder="URL" onChangeText={setURL} />
+        <Button title="Adicionar" onPress={handleAdd} />
       </View>
     </View>
   );
